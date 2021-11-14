@@ -6,12 +6,12 @@ import {Query} from "graphql/types"
 
 export default function Home() {
 
-	const MY_QUERY = gql`query UserById($fromId: Int, $toId: Int) {
-      users(filter: {
+	const MY_QUERY = gql`query UserById($fromId: Int, $toId: Int, $condition: UserCondition) {
+      users(condition: $condition, filter: {
           and: [
               {userId: {greaterThanOrEqualTo: $fromId}}
               {userId: {lessThanOrEqualTo: $toId}}
-          ],
+          ]
       }) {
           nodes {
               userId

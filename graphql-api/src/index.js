@@ -28,7 +28,10 @@ export const postgraphileOptions = {
 	pgSettings(req) {
 		/* TODO */
 	},
-	enableCors: true
+	enableCors: true,
+	graphileBuildOptions: {
+		connectionFilterAllowNullInput: true
+	}
 };
 
 

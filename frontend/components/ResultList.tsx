@@ -14,7 +14,7 @@ export default function ResultList(props: Props) {
 			{props.items.users?.nodes.map((item, id) =>
 				<li key={id} className={"shadow w-full p-4 m-2"}>
 					<div>
-						{JSON.stringify(item)} <br/>
+						ID: {item?.userId}<br/>
 						First name: {item?.firstName} <br/>
 						Age: {item?.age} <br/>
 						First Item: {item?.items.nodes[0]?.name}
