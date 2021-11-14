@@ -6,8 +6,13 @@ import {Query} from "graphql/types"
 
 export default function Home() {
 
-	const MY_QUERY = gql`query UserById($userId: Int!) {
-      allUsers(condition: {userId: $userId}) {
+	const MY_QUERY = gql`query UserById($fromId: Int!, $toId: Int!) {
+      allUsers(filter: {
+          and: [
+              {userId: {lessThanOrEqualTo: $toId}},
+              {userId: {greaterThanOrEqualTo: $fromId}}
+          ],
+      }) {
           nodes {
               userId
               firstName

@@ -6,7 +6,7 @@ interface Props {
 
 export default function Filter(props: Props) {
 	const [fromId, setFromId] = useState<number>()
-	const [toId, setToId] = useState<string>("")
+	const [toId, setToId] = useState<number>()
 	const [firstName, setFirstname] = useState<string>("")
 	const [lastName, setLastname] = useState<string>("")
 	const [userId, setUserId] = useState<string>("")
@@ -14,13 +14,14 @@ export default function Filter(props: Props) {
 
 	const onFilter = () => {
 		const queryParams = {
-			id: fromId || 3,
+			fromId: fromId || 2,
+			toId: toId || 4,
 			firstName,
 			lastName,
 			userId
 		}
 		console.log(JSON.stringify(queryParams))
-		props.refetch({userId: queryParams.id})
+		props.refetch({fromId: queryParams.fromId, toId: queryParams.toId})
 
 	}
 
@@ -33,7 +34,7 @@ export default function Filter(props: Props) {
 					<label>From id</label>
 					<input type={"text"} className={"border p-1 my-1"} onChange={e => setFromId(parseInt(e.target.value))}/>
 					<label>To id</label>
-					<input type={"text"} className={"border p-1 my-1"} onChange={e => setToId(e.target.value)}/>
+					<input type={"text"} className={"border p-1 my-1"} onChange={e => setToId(parseInt(e.target.value))}/>
 					<label>First name</label>
 					<input type={"text"} className={"border p-1 my-1"} onChange={e => setFirstname(e.target.value)}/>
 					<label>Last name</label>
