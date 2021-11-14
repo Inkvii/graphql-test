@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default function Filter(props: Props) {
-	const [fromId, setFromId] = useState<string>("")
+	const [fromId, setFromId] = useState<number>()
 	const [toId, setToId] = useState<string>("")
 	const [firstName, setFirstname] = useState<string>("")
 	const [lastName, setLastname] = useState<string>("")
@@ -14,13 +14,13 @@ export default function Filter(props: Props) {
 
 	const onFilter = () => {
 		const queryParams = {
-			id: fromId,
+			id: fromId || 3,
 			firstName,
 			lastName,
 			userId
 		}
-
-		props.refetch({userCondition: queryParams})
+		console.log(JSON.stringify(queryParams))
+		props.refetch({userId: queryParams.id})
 
 	}
 
@@ -31,7 +31,7 @@ export default function Filter(props: Props) {
 
 				<div className={"flex flex-col w-full"}>
 					<label>From id</label>
-					<input type={"text"} className={"border p-1 my-1"} onChange={e => setFromId(e.target.value)}/>
+					<input type={"text"} className={"border p-1 my-1"} onChange={e => setFromId(parseInt(e.target.value))}/>
 					<label>To id</label>
 					<input type={"text"} className={"border p-1 my-1"} onChange={e => setToId(e.target.value)}/>
 					<label>First name</label>

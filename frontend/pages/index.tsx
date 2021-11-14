@@ -6,8 +6,8 @@ import {Query} from "graphql/types"
 
 export default function Home() {
 
-	const MY_QUERY = gql`query UserById($userCondition: UserCondition!) {
-      allUsers(condition: $userCondition) {
+	const MY_QUERY = gql`query UserById($userId: Int!) {
+      allUsers(condition: {userId: $userId}) {
           nodes {
               userId
               firstName
