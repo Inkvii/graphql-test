@@ -301,7 +301,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userByUserId",
+            "name": "user",
             "description": "Reads a single `User` that is related to this `Item`.",
             "args": [],
             "type": {
@@ -449,47 +449,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DeleteItemByItemIdInput",
-        "description": "All input for the `deleteItemByItemId` mutation.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "clientMutationId",
-            "description": "An arbitrary string value with no semantic meaning. Will be included in the\npayload verbatim. May be used to track mutations by the client.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "itemId",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "DeleteItemInput",
-        "description": "All input for the `deleteItem` mutation.",
+        "name": "DeleteItemByNodeIdInput",
+        "description": "All input for the `deleteItemByNodeId` mutation.",
         "fields": null,
         "inputFields": [
           {
@@ -526,6 +487,45 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "DeleteItemInput",
+        "description": "All input for the `deleteItem` mutation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "clientMutationId",
+            "description": "An arbitrary string value with no semantic meaning. Will be included in the\npayload verbatim. May be used to track mutations by the client.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "itemId",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "DeleteItemPayload",
         "description": "The output of our delete `Item` mutation.",
@@ -543,7 +543,7 @@
             "deprecationReason": null
           },
           {
-            "name": "deletedItemId",
+            "name": "deletedItemNodeId",
             "description": null,
             "args": [],
             "type": {
@@ -612,7 +612,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userByUserId",
+            "name": "user",
             "description": "Reads a single `User` that is related to this `Item`.",
             "args": [],
             "type": {
@@ -631,47 +631,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DeleteUserByUserIdInput",
-        "description": "All input for the `deleteUserByUserId` mutation.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "clientMutationId",
-            "description": "An arbitrary string value with no semantic meaning. Will be included in the\npayload verbatim. May be used to track mutations by the client.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userId",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "DeleteUserInput",
-        "description": "All input for the `deleteUser` mutation.",
+        "name": "DeleteUserByNodeIdInput",
+        "description": "All input for the `deleteUserByNodeId` mutation.",
         "fields": null,
         "inputFields": [
           {
@@ -708,6 +669,45 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "DeleteUserInput",
+        "description": "All input for the `deleteUser` mutation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "clientMutationId",
+            "description": "An arbitrary string value with no semantic meaning. Will be included in the\npayload verbatim. May be used to track mutations by the client.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userId",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "DeleteUserPayload",
         "description": "The output of our delete `User` mutation.",
@@ -725,7 +725,7 @@
             "deprecationReason": null
           },
           {
-            "name": "deletedUserId",
+            "name": "deletedUserNodeId",
             "description": null,
             "args": [],
             "type": {
@@ -1048,7 +1048,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userByUserId",
+            "name": "user",
             "description": "Reads a single `User` that is related to this `Item`.",
             "args": [],
             "type": {
@@ -1423,9 +1423,13 @@
                 "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Item",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Item",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1492,9 +1496,13 @@
             "description": "The `Item` at the end of the edge.",
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "Item",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Item",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1647,7 +1655,7 @@
           },
           {
             "name": "deleteItem",
-            "description": "Deletes a single `Item` using its globally unique id.",
+            "description": "Deletes a single `Item` using a unique key.",
             "args": [
               {
                 "name": "input",
@@ -1675,8 +1683,8 @@
             "deprecationReason": null
           },
           {
-            "name": "deleteItemByItemId",
-            "description": "Deletes a single `Item` using a unique key.",
+            "name": "deleteItemByNodeId",
+            "description": "Deletes a single `Item` using its globally unique id.",
             "args": [
               {
                 "name": "input",
@@ -1686,7 +1694,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DeleteItemByItemIdInput",
+                    "name": "DeleteItemByNodeIdInput",
                     "ofType": null
                   }
                 },
@@ -1705,7 +1713,7 @@
           },
           {
             "name": "deleteUser",
-            "description": "Deletes a single `User` using its globally unique id.",
+            "description": "Deletes a single `User` using a unique key.",
             "args": [
               {
                 "name": "input",
@@ -1733,8 +1741,8 @@
             "deprecationReason": null
           },
           {
-            "name": "deleteUserByUserId",
-            "description": "Deletes a single `User` using a unique key.",
+            "name": "deleteUserByNodeId",
+            "description": "Deletes a single `User` using its globally unique id.",
             "args": [
               {
                 "name": "input",
@@ -1744,7 +1752,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DeleteUserByUserIdInput",
+                    "name": "DeleteUserByNodeIdInput",
                     "ofType": null
                   }
                 },
@@ -1763,7 +1771,7 @@
           },
           {
             "name": "updateItem",
-            "description": "Updates a single `Item` using its globally unique id and a patch.",
+            "description": "Updates a single `Item` using a unique key and a patch.",
             "args": [
               {
                 "name": "input",
@@ -1791,8 +1799,8 @@
             "deprecationReason": null
           },
           {
-            "name": "updateItemByItemId",
-            "description": "Updates a single `Item` using a unique key and a patch.",
+            "name": "updateItemByNodeId",
+            "description": "Updates a single `Item` using its globally unique id and a patch.",
             "args": [
               {
                 "name": "input",
@@ -1802,7 +1810,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "UpdateItemByItemIdInput",
+                    "name": "UpdateItemByNodeIdInput",
                     "ofType": null
                   }
                 },
@@ -1821,7 +1829,7 @@
           },
           {
             "name": "updateUser",
-            "description": "Updates a single `User` using its globally unique id and a patch.",
+            "description": "Updates a single `User` using a unique key and a patch.",
             "args": [
               {
                 "name": "input",
@@ -1849,8 +1857,8 @@
             "deprecationReason": null
           },
           {
-            "name": "updateUserByUserId",
-            "description": "Updates a single `User` using a unique key and a patch.",
+            "name": "updateUserByNodeId",
+            "description": "Updates a single `User` using its globally unique id and a patch.",
             "args": [
               {
                 "name": "input",
@@ -1860,7 +1868,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "UpdateUserByUserIdInput",
+                    "name": "UpdateUserByNodeIdInput",
                     "ofType": null
                   }
                 },
@@ -1999,7 +2007,65 @@
         "description": "The root query type which gives access points into the data universe.",
         "fields": [
           {
-            "name": "allItems",
+            "name": "item",
+            "description": null,
+            "args": [
+              {
+                "name": "itemId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Item",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "itemByNodeId",
+            "description": "Reads a single `Item` using its globally unique `ID`.",
+            "args": [
+              {
+                "name": "nodeId",
+                "description": "The globally unique `ID` to be used in selecting a single `Item`.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Item",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "items",
             "description": "Reads and enables pagination through a set of `Item`.",
             "args": [
               {
@@ -2116,7 +2182,126 @@
             "deprecationReason": null
           },
           {
-            "name": "allUsers",
+            "name": "node",
+            "description": "Fetches an object given its globally unique `ID`.",
+            "args": [
+              {
+                "name": "nodeId",
+                "description": "The globally unique `ID`.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nodeId",
+            "description": "The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "Exposes the root query type nested one level down. This is helpful for Relay 1\nwhich can only query top level fields if they are in a particular form.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Query",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": null,
+            "args": [
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userByNodeId",
+            "description": "Reads a single `User` using its globally unique `ID`.",
+            "args": [
+              {
+                "name": "nodeId",
+                "description": "The globally unique `ID` to be used in selecting a single `User`.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "users",
             "description": "Reads and enables pagination through a set of `User`.",
             "args": [
               {
@@ -2227,183 +2412,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "UsersConnection",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "item",
-            "description": "Reads a single `Item` using its globally unique `ID`.",
-            "args": [
-              {
-                "name": "nodeId",
-                "description": "The globally unique `ID` to be used in selecting a single `Item`.",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "Item",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "itemByItemId",
-            "description": null,
-            "args": [
-              {
-                "name": "itemId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "Item",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "node",
-            "description": "Fetches an object given its globally unique `ID`.",
-            "args": [
-              {
-                "name": "nodeId",
-                "description": "The globally unique `ID`.",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "INTERFACE",
-              "name": "Node",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "nodeId",
-            "description": "The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "query",
-            "description": "Exposes the root query type nested one level down. This is helpful for Relay 1\nwhich can only query top level fields if they are in a particular form.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Query",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "user",
-            "description": "Reads a single `User` using its globally unique `ID`.",
-            "args": [
-              {
-                "name": "nodeId",
-                "description": "The globally unique `ID` to be used in selecting a single `User`.",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userByUserId",
-            "description": null,
-            "args": [
-              {
-                "name": "userId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "User",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2920,8 +2928,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "UpdateItemByItemIdInput",
-        "description": "All input for the `updateItemByItemId` mutation.",
+        "name": "UpdateItemByNodeIdInput",
+        "description": "All input for the `updateItemByNodeId` mutation.",
         "fields": null,
         "inputFields": [
           {
@@ -2937,14 +2945,14 @@
             "deprecationReason": null
           },
           {
-            "name": "itemId",
-            "description": null,
+            "name": "nodeId",
+            "description": "The globally unique `ID` which will identify a single `Item` to be updated.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "ID",
                 "ofType": null
               }
             },
@@ -2953,7 +2961,7 @@
             "deprecationReason": null
           },
           {
-            "name": "itemPatch",
+            "name": "patch",
             "description": "An object where the defined keys will be set on the `Item` being updated.",
             "type": {
               "kind": "NON_NULL",
@@ -2992,14 +3000,14 @@
             "deprecationReason": null
           },
           {
-            "name": "itemPatch",
-            "description": "An object where the defined keys will be set on the `Item` being updated.",
+            "name": "itemId",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "ItemPatch",
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -3008,14 +3016,14 @@
             "deprecationReason": null
           },
           {
-            "name": "nodeId",
-            "description": "The globally unique `ID` which will identify a single `Item` to be updated.",
+            "name": "patch",
+            "description": "An object where the defined keys will be set on the `Item` being updated.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "INPUT_OBJECT",
+                "name": "ItemPatch",
                 "ofType": null
               }
             },
@@ -3103,7 +3111,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userByUserId",
+            "name": "user",
             "description": "Reads a single `User` that is related to this `Item`.",
             "args": [],
             "type": {
@@ -3122,8 +3130,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "UpdateUserByUserIdInput",
-        "description": "All input for the `updateUserByUserId` mutation.",
+        "name": "UpdateUserByNodeIdInput",
+        "description": "All input for the `updateUserByNodeId` mutation.",
         "fields": null,
         "inputFields": [
           {
@@ -3139,14 +3147,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
-            "description": null,
+            "name": "nodeId",
+            "description": "The globally unique `ID` which will identify a single `User` to be updated.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "ID",
                 "ofType": null
               }
             },
@@ -3155,7 +3163,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userPatch",
+            "name": "patch",
             "description": "An object where the defined keys will be set on the `User` being updated.",
             "type": {
               "kind": "NON_NULL",
@@ -3194,14 +3202,14 @@
             "deprecationReason": null
           },
           {
-            "name": "nodeId",
-            "description": "The globally unique `ID` which will identify a single `User` to be updated.",
+            "name": "patch",
+            "description": "An object where the defined keys will be set on the `User` being updated.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "INPUT_OBJECT",
+                "name": "UserPatch",
                 "ofType": null
               }
             },
@@ -3210,14 +3218,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userPatch",
-            "description": "An object where the defined keys will be set on the `User` being updated.",
+            "name": "userId",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "UserPatch",
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -3344,7 +3352,7 @@
             "deprecationReason": null
           },
           {
-            "name": "itemsByUserId",
+            "name": "items",
             "description": "Reads and enables pagination through a set of `Item`.",
             "args": [
               {
@@ -3860,9 +3868,13 @@
                 "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "User",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "User",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -3929,9 +3941,13 @@
             "description": "The `User` at the end of the edge.",
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

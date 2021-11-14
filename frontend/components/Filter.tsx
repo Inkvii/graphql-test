@@ -14,8 +14,8 @@ export default function Filter(props: Props) {
 
 	const onFilter = () => {
 		const queryParams = {
-			fromId: fromId || 2,
-			toId: toId || 4,
+			fromId: fromId || 1,
+			toId: toId || 2,
 			firstName,
 			lastName,
 			userId

@@ -1,6 +1,0 @@
-query UserById($userId: Int!) {
-    userByUserId(userId: $userId) {
-        userId
-        firstName
-    }
-}

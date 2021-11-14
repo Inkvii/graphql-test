@@ -7,7 +7,7 @@ import {Query} from "graphql/types"
 export default function Home() {
 
 	const MY_QUERY = gql`query UserById($fromId: Int, $toId: Int) {
-      allUsers(filter: {
+      users(filter: {
           and: [
               {userId: {greaterThanOrEqualTo: $fromId}}
               {userId: {lessThanOrEqualTo: $toId}}
@@ -17,7 +17,7 @@ export default function Home() {
               userId
               firstName
               age
-              itemsByUserId(first: 1) {
+              items(first: 1) {
                   nodes {
                       name
                   }

@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start-graphql": "postgraphile --append-plugins postgraphile-plugin-connection-filter --cors --dynamic-json --enhance-graphiql --allow-explain --show-error-stack --extended-errors severity,code,detail,hint,position,internalPosition,internalQuery,where,schema,table,column,dataType,constraint,file,line,routine -c postgres://sa:password@localhost:5431/backend_db ",
+    "run": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "postgraphile": "^4.12.5",
     "postgraphile-plugin-connection-filter": "^2.2.2"
   }
