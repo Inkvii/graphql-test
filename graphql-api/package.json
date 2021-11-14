@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-graphql": "postgraphile --append-plugins postgraphile-plugin-connection-filter --cors -c postgres://sa:password@localhost:5431/backend_db ",
+    "start-graphql": "postgraphile --append-plugins postgraphile-plugin-connection-filter --cors --dynamic-json --enhance-graphiql --allow-explain --show-error-stack --extended-errors severity,code,detail,hint,position,internalPosition,internalQuery,where,schema,table,column,dataType,constraint,file,line,routine -c postgres://sa:password@localhost:5431/backend_db ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
