@@ -1,8 +1,6 @@
-query {
-    allUsers {
-        nodes {
-            firstName,
-            age
-        }
+query UserById($userId: Int!) {
+    userByUserId(userId: $userId) {
+        userId
+        firstName
     }
 }

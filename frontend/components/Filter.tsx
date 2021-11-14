@@ -1,18 +1,26 @@
 import {useState} from "react"
 
 interface Props {
-
+	refetch: CallableFunction
 }
 
 export default function Filter(props: Props) {
 	const [fromId, setFromId] = useState<string>("")
 	const [toId, setToId] = useState<string>("")
-	const [firstname, setFirstname] = useState<string>("")
-	const [lastname, setLastname] = useState<string>("")
+	const [firstName, setFirstname] = useState<string>("")
+	const [lastName, setLastname] = useState<string>("")
 	const [userId, setUserId] = useState<string>("")
 
+
 	const onFilter = () => {
-		console.log(fromId)
+		const queryParams = {
+			id: fromId,
+			firstName,
+			lastName,
+			userId
+		}
+
+		props.refetch({userCondition: queryParams})
 
 	}
 

@@ -3,26 +3,15 @@ import ResultList from "components/ResultList"
 import {gql, useQuery} from "@apollo/client"
 import {Query} from "graphql/types"
 
-const mock = [
-	{
-		firstName: "First name",
-		lastName: "Last name",
-		age: 60
-	}, {
-		firstName: "First name 2",
-		lastName: "Last name 2",
-		age: 61
-	}
-]
 
 export default function Home() {
 
-	const MY_QUERY = gql`query Testubg{
-      allUsers(filter: {userId: {lessThan: 3}}) {
+	const MY_QUERY = gql`query UserById($userCondition: UserCondition!) {
+      allUsers(condition: $userCondition) {
           nodes {
               userId
-              firstName,
-              age,
+              firstName
+              age
               itemsByUserId(first: 1) {
                   nodes {
                       name
@@ -30,9 +19,12 @@ export default function Home() {
               }
           }
       }
-  }`
+  }
+	`
 
-	const {loading, error, data} = useQuery<Query>(MY_QUERY)
+
+	const {loading, error, data, refetch} = useQuery<Query>(MY_QUERY)
+
 
 	return (
 		<div className={"flex justify-center bg-gray-200"}>
@@ -40,7 +32,7 @@ export default function Home() {
 				<h1 className={"flex text-4xl justify-center pb-4"}>
 					GraphQL Api test
 				</h1>
-				<Filter/>
+				<Filter refetch={refetch}/>
 				Result list
 				<ResultList loading={loading} items={data}/>
 			</div>
