@@ -28,9 +28,7 @@ export default function Home() {
   }
 	`
 
-
 	const {loading, error, data, refetch} = useQuery<Query>(MY_QUERY)
-
 
 	return (
 		<div className={"flex justify-center bg-gray-200"}>
@@ -41,14 +39,14 @@ export default function Home() {
 				<Link passHref={true} href={"/itemsPage"}>
 					<div className={"bg-blue-600 text-white w-1/2 px-8 py-4 my-4 self-center flex flex-col hover:bg-blue-700"}>
 						<p className={"text-center"}>
-							Load next
+							Go to items
 						</p>
 					</div>
 				</Link>
 
 				<Filter refetch={refetch}/>
 				Result list
-				<ResultList loading={loading} items={data}/>
+				<ResultList loading={loading} data={data?.users}/>
 			</div>
 		</div>
 	)
