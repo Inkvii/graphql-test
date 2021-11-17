@@ -1,9 +1,16 @@
 import {Fragment, useEffect, useState} from "react"
 import {UserCondition} from "graphql/types"
 
+
+interface Validator {
+	regex: string,
+	textOnError: string
+}
+
 interface FormDto {
 	label: string,
-	value: string
+	value: string,
+	validators?: Validator[]
 }
 
 interface UserFormDto {
@@ -12,33 +19,45 @@ interface UserFormDto {
 	firstName: FormDto,
 	lastName: FormDto,
 	userId: FormDto,
-	testing: FormDto
 }
 
 const initialState: UserFormDto = {
 	fromId: {
 		label: "From id",
-		value: ""
+		value: "",
+		validators: [
+			{regex: "[0-9]+", textOnError: "Must be a number"}
+		]
 	},
 	toId: {
 		label: "To Id",
-		value: ""
+		value: "",
+		validators: [
+			{regex: "[0-9]+", textOnError: "Must be a number"}
+		]
 	},
 	userId: {
 		label: "User id",
-		value: ""
+		value: "",
+		validators: [
+			{regex: "[0-9]+", textOnError: "Must be a number"}
+		]
 	},
 	firstName: {
 		label: "First name",
-		value: ""
+		value: "",
+		validators: [
+			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
+			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
+		]
 	},
 	lastName: {
 		label: "Last name",
-		value: ""
-	},
-	testing: {
-		label: "Testing label",
-		value: "123"
+		value: "",
+		validators: [
+			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
+			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
+		]
 	}
 }
 
@@ -94,7 +113,8 @@ export default function Filter(props: Props) {
 						const keyLiteral = key as unknown as keyof UserFormDto
 						const form = dto[keyLiteral]
 						return (
-							<LabelInput key={key} formDto={{label: dto[keyLiteral].label, value: dto[keyLiteral].value}}
+							<LabelInput key={key}
+							            formDto={{label: dto[keyLiteral].label, value: dto[keyLiteral].value, validators: dto[keyLiteral].validators}}
 							            onChange={(updatedValue: string) => setValue(keyLiteral, updatedValue)}/>
 						)
 					})}
@@ -111,33 +131,41 @@ export default function Filter(props: Props) {
 const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
 	const [value, setValue] = useState(props.formDto.value)
 	const [valid, setValid] = useState<boolean | null>(null)
+	const [errorText, setErrorText] = useState<string>("")
 
 	const [className, setClassName] = useState<string>("")
 
 	const changeValue = (updatedValue: string) => {
-		console.log("Value has been changed to " + updatedValue)
 		setValue(updatedValue)
 
-		const isValid = updatedValue.search(/[0-9]+/g) >= 0
-		console.log("Is valid: " + isValid)
-		setValid(isValid)
+		let text = ""
+		let result = true
 
-		console.log()
+
+		if (props.formDto.validators) {
+			for (let validator of props.formDto.validators) {
+				result = result && updatedValue.search(new RegExp(validator.regex)) >= 0
+				if (!result) {
+					text = validator.textOnError
+					break
+				}
+			}
+
+			setValid(result)
+			setErrorText(text)
+		}
 
 		props.onChange(updatedValue)
 	}
 
 	useEffect(() => {
 		if (valid === true) {
-			console.log("I am true")
 			const css = "border-green-700"
 			setClassName(css)
 		} else if (valid === false) {
-			console.log("I am false")
 			const css = "border-red-700"
 			setClassName(css)
 		} else {
-			console.log("I am null")
 			const css = "border-black"
 			setClassName(css)
 		}
@@ -147,8 +175,10 @@ const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
 	return (
 		<Fragment>
 			<label>{props.formDto.label}</label>
-			<input type={"text"} className={`p-1 my-1 border  outline-none ${className}`} value={value}
+			<input type={"text"} className={`p-1 my-1 border  outline-none ${className}`}
+			       value={value}
 			       onChange={e => changeValue(e.target.value)}/>
+			<label className={"text-center text-sm text-red-500"}>{errorText}</label>
 		</Fragment>
 	)
 }
