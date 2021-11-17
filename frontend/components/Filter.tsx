@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from "react"
+import {Fragment, useEffect, useMemo, useState} from "react"
 import {UserCondition} from "graphql/types"
 
 
@@ -11,6 +11,7 @@ interface FormDto {
 	label: string,
 	value: string,
 	validators?: Validator[]
+	valid: boolean
 }
 
 interface UserFormDto {
@@ -27,21 +28,24 @@ const initialState: UserFormDto = {
 		value: "",
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
-		]
+		],
+		valid: false
 	},
 	toId: {
 		label: "To Id",
 		value: "",
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
-		]
+		],
+		valid: false
 	},
 	userId: {
 		label: "User id",
 		value: "",
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
-		]
+		],
+		valid: false
 	},
 	firstName: {
 		label: "First name",
@@ -49,7 +53,8 @@ const initialState: UserFormDto = {
 		validators: [
 			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
 			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
-		]
+		],
+		valid: false
 	},
 	lastName: {
 		label: "Last name",
@@ -57,7 +62,8 @@ const initialState: UserFormDto = {
 		validators: [
 			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
 			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
-		]
+		],
+		valid: false
 	}
 }
 
@@ -68,6 +74,18 @@ interface Props {
 
 export default function Filter(props: Props) {
 	const [dto, setDto] = useState<UserFormDto>(initialState)
+
+	const disableFilter = useMemo(() => {
+		const result = Object.keys(dto).some((key) => {
+			const keyLiteral = key as unknown as keyof UserFormDto
+			const form = dto[keyLiteral]
+			console.log("Form " + keyLiteral + " is " + form.valid)
+			return !form.valid
+		})
+		console.log("Disable filter rememoied to " + result)
+		return result
+	}, [dto])
+
 
 	const onFilter = () => {
 
@@ -92,16 +110,16 @@ export default function Filter(props: Props) {
 		setDto({...initialState})
 	}
 
-	const setValue = (property: keyof UserFormDto, value: string) => {
+	const setValue = (property: keyof UserFormDto, value: string, valid: boolean) => {
 		const changedValue = dto[property]
 		changedValue.value = value
+		changedValue.valid = valid
 		setDto({...dto, [property]: changedValue})
 	}
 
 	useEffect(() => {
 		console.log(dto)
 	}, [dto])
-
 
 	return (
 		<div className={"my-2"}>
@@ -114,15 +132,23 @@ export default function Filter(props: Props) {
 						const form = dto[keyLiteral]
 						return (
 							<LabelInput key={key}
-							            formDto={{label: dto[keyLiteral].label, value: dto[keyLiteral].value, validators: dto[keyLiteral].validators}}
-							            onChange={(updatedValue: string) => setValue(keyLiteral, updatedValue)}/>
+							            formDto={{
+								            label: dto[keyLiteral].label,
+								            value: dto[keyLiteral].value,
+								            validators: dto[keyLiteral].validators,
+								            valid: dto[keyLiteral].valid
+							            }}
+							            onChange={(updatedValue: string, valid: boolean) => setValue(keyLiteral, updatedValue, valid)}/>
 						)
 					})}
 				</div>
 			</div>
 			<div className={"grid grid-cols-2 gap-1"}>
 				<button className={"bg-blue-500 text-white px-8 py-2 my-2 hover:bg-blue-600"} onClick={() => onReset()}>Reset</button>
-				<button className={"bg-blue-700 text-white px-8 py-2 my-2 hover:bg-blue-800"} onClick={() => onFilter()}>Filter</button>
+				<button
+					className={disableFilter ? "bg-gray-600 text-white px-8 py-2 my-2" : "bg-blue-700 text-white px-8 py-2 my-2 hover:bg-blue-800"}
+					disabled={disableFilter} onClick={() => onFilter()}>Filter
+				</button>
 			</div>
 		</div>
 	)
@@ -155,7 +181,7 @@ const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
 			setErrorText(text)
 		}
 
-		props.onChange(updatedValue)
+		props.onChange(updatedValue, result)
 	}
 
 	useEffect(() => {
