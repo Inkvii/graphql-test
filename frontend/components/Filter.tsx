@@ -11,7 +11,8 @@ interface UserFormDto {
 	toId: FormDto,
 	firstName: FormDto,
 	lastName: FormDto,
-	userId: FormDto
+	userId: FormDto,
+	testing: FormDto
 }
 
 const initialState: UserFormDto = {
@@ -34,6 +35,10 @@ const initialState: UserFormDto = {
 	lastName: {
 		label: "Last name",
 		value: ""
+	},
+	testing: {
+		label: "Testing label",
+		value: "123"
 	}
 }
 
@@ -89,11 +94,8 @@ export default function Filter(props: Props) {
 						const keyLiteral = key as unknown as keyof UserFormDto
 						const form = dto[keyLiteral]
 						return (
-							<Fragment key={key}>
-								<label>{form.label}</label>
-								<input type={"text"} className={"border p-1 my-1"} value={form.value}
-								       onChange={e => setValue(keyLiteral, e.target.value)}/>
-							</Fragment>
+							<LabelInput key={key} formDto={{label: dto[keyLiteral].label, value: dto[keyLiteral].value}}
+							            onChange={(updatedValue: string) => setValue(keyLiteral, updatedValue)}/>
 						)
 					})}
 				</div>
@@ -103,6 +105,51 @@ export default function Filter(props: Props) {
 				<button className={"bg-blue-700 text-white px-8 py-2 my-2 hover:bg-blue-800"} onClick={() => onFilter()}>Filter</button>
 			</div>
 		</div>
+	)
+}
+
+const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
+	const [value, setValue] = useState(props.formDto.value)
+	const [valid, setValid] = useState<boolean | null>(null)
+
+	const [className, setClassName] = useState<string>("")
+
+	const changeValue = (updatedValue: string) => {
+		console.log("Value has been changed to " + updatedValue)
+		setValue(updatedValue)
+
+		const isValid = updatedValue.search(/[0-9]+/g) >= 0
+		console.log("Is valid: " + isValid)
+		setValid(isValid)
+
+		console.log()
+
+		props.onChange(updatedValue)
+	}
+
+	useEffect(() => {
+		if (valid === true) {
+			console.log("I am true")
+			const css = "border-green-700"
+			setClassName(css)
+		} else if (valid === false) {
+			console.log("I am false")
+			const css = "border-red-700"
+			setClassName(css)
+		} else {
+			console.log("I am null")
+			const css = "border-black"
+			setClassName(css)
+		}
+		console.log("Triggered use effect on valid to: " + valid)
+	}, [valid])
+
+	return (
+		<Fragment>
+			<label>{props.formDto.label}</label>
+			<input type={"text"} className={`p-1 my-1 border  outline-none ${className}`} value={value}
+			       onChange={e => changeValue(e.target.value)}/>
+		</Fragment>
 	)
 }
 
