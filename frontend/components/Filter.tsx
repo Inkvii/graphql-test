@@ -1,16 +1,41 @@
 import {Fragment, useEffect, useState} from "react"
 import {UserCondition} from "graphql/types"
 
-
-interface UserFormDto {
-	fromId: string,
-	toId: string,
-	firstName: string,
-	lastName: string,
-	userId: string
+interface FormDto {
+	label: string,
+	value: string
 }
 
-const initialState: UserFormDto = {fromId: "", userId: "", firstName: "", lastName: "", toId: ""}
+interface UserFormDto {
+	fromId: FormDto,
+	toId: FormDto,
+	firstName: FormDto,
+	lastName: FormDto,
+	userId: FormDto
+}
+
+const initialState: UserFormDto = {
+	fromId: {
+		label: "From id",
+		value: ""
+	},
+	toId: {
+		label: "To Id",
+		value: ""
+	},
+	userId: {
+		label: "User id",
+		value: ""
+	},
+	firstName: {
+		label: "First name",
+		value: ""
+	},
+	lastName: {
+		label: "Last name",
+		value: ""
+	}
+}
 
 interface Props {
 	refetch: CallableFunction
@@ -23,14 +48,14 @@ export default function Filter(props: Props) {
 	const onFilter = () => {
 
 		const condition: UserCondition = {
-			firstName: dto.firstName.length > 0 ? dto.firstName : undefined,
-			lastName: dto.lastName.length > 0 ? dto.lastName : undefined,
-			userId: parseInt(dto.userId) || undefined
+			firstName: dto.firstName.value.length > 0 ? dto.firstName.value : undefined,
+			lastName: dto.lastName.value.length > 0 ? dto.lastName.value : undefined,
+			userId: parseInt(dto.userId.value) || undefined
 		}
 
 		const queryParams = {
-			fromId: parseInt(dto.fromId) || null,
-			toId: parseInt(dto.toId) || null,
+			fromId: parseInt(dto.fromId.value) || null,
+			toId: parseInt(dto.toId.value) || null,
 			condition
 		}
 		console.log(JSON.stringify(queryParams))
@@ -44,7 +69,9 @@ export default function Filter(props: Props) {
 	}
 
 	const setValue = (property: keyof UserFormDto, value: string) => {
-		setDto({...dto, [property]: value})
+		const changedValue = dto[property]
+		changedValue.value = value
+		setDto({...dto, [property]: changedValue})
 	}
 
 	useEffect(() => {
@@ -59,11 +86,13 @@ export default function Filter(props: Props) {
 
 				<div className={"flex flex-col w-full"}>
 					{Object.keys(dto).map((key) => {
+						const keyLiteral = key as unknown as keyof UserFormDto
+						const form = dto[keyLiteral]
 						return (
 							<Fragment key={key}>
-								<label>{key}</label>
-								<input type={"text"} className={"border p-1 my-1"} value={dto[key as unknown as keyof UserFormDto]}
-								       onChange={e => setValue(key as unknown as keyof UserFormDto, e.target.value)}/>
+								<label>{form.label}</label>
+								<input type={"text"} className={"border p-1 my-1"} value={form.value}
+								       onChange={e => setValue(keyLiteral, e.target.value)}/>
 							</Fragment>
 						)
 					})}
