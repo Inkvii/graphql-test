@@ -11,7 +11,7 @@ interface FormDto {
 	label: string,
 	value: string,
 	validators?: Validator[]
-	valid: boolean
+	valid: boolean | null
 }
 
 interface UserFormDto {
@@ -29,7 +29,7 @@ const initialState: UserFormDto = {
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
 		],
-		valid: false
+		valid: null
 	},
 	toId: {
 		label: "To Id",
@@ -37,7 +37,7 @@ const initialState: UserFormDto = {
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
 		],
-		valid: false
+		valid: null
 	},
 	userId: {
 		label: "User id",
@@ -45,7 +45,7 @@ const initialState: UserFormDto = {
 		validators: [
 			{regex: "[0-9]+", textOnError: "Must be a number"}
 		],
-		valid: false
+		valid: null
 	},
 	firstName: {
 		label: "First name",
@@ -54,7 +54,7 @@ const initialState: UserFormDto = {
 			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
 			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
 		],
-		valid: false
+		valid: null
 	},
 	lastName: {
 		label: "Last name",
@@ -63,7 +63,7 @@ const initialState: UserFormDto = {
 			{regex: "^[A-Z]", textOnError: "Must start with uppercase A-Z"},
 			{regex: "^[A-Za-z]*$", textOnError: "Cannot contain whitespaces"}
 		],
-		valid: false
+		valid: null
 	}
 }
 
@@ -73,7 +73,7 @@ interface Props {
 
 
 export default function Filter(props: Props) {
-	const [dto, setDto] = useState<UserFormDto>(initialState)
+	const [dto, setDto] = useState<UserFormDto>(JSON.parse(JSON.stringify(initialState)))
 
 	const disableFilter = useMemo(() => {
 		const result = Object.keys(dto).some((key) => {
@@ -107,7 +107,7 @@ export default function Filter(props: Props) {
 
 	const onReset = () => {
 		console.log("Resetting")
-		setDto({...initialState})
+		setDto(JSON.parse(JSON.stringify(initialState)))
 	}
 
 	const setValue = (property: keyof UserFormDto, value: string, valid: boolean) => {
@@ -155,18 +155,12 @@ export default function Filter(props: Props) {
 }
 
 const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
-	const [value, setValue] = useState(props.formDto.value)
-	const [valid, setValid] = useState<boolean | null>(null)
 	const [errorText, setErrorText] = useState<string>("")
-
 	const [className, setClassName] = useState<string>("")
 
 	const changeValue = (updatedValue: string) => {
-		setValue(updatedValue)
-
 		let text = ""
 		let result = true
-
 
 		if (props.formDto.validators) {
 			for (let validator of props.formDto.validators) {
@@ -177,7 +171,6 @@ const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
 				}
 			}
 
-			setValid(result)
 			setErrorText(text)
 		}
 
@@ -185,28 +178,26 @@ const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
 	}
 
 	useEffect(() => {
-		if (valid === true) {
+		if (props.formDto.valid === true) {
 			const css = "border-green-700"
 			setClassName(css)
-		} else if (valid === false) {
+		} else if (props.formDto.valid === false) {
 			const css = "border-red-700"
 			setClassName(css)
 		} else {
 			const css = "border-black"
 			setClassName(css)
 		}
-		console.log("Triggered use effect on valid to: " + valid)
-	}, [valid])
+		console.log("Triggered use effect on valid to: " + props.formDto.valid)
+	}, [props.formDto.valid])
 
 	return (
 		<Fragment>
 			<label>{props.formDto.label}</label>
 			<input type={"text"} className={`p-1 my-1 border  outline-none ${className}`}
-			       value={value}
+			       value={props.formDto.value}
 			       onChange={e => changeValue(e.target.value)}/>
-			<label className={"text-center text-sm text-red-500"}>{errorText}</label>
+			<label className={"text-center text-sm text-red-500"}>{props.formDto.valid !== null ? errorText : ""}</label>
 		</Fragment>
 	)
 }
-
-
