@@ -37,8 +37,6 @@ export default function ResultList(props: Props) {
 											                      }}
 											>
 												Details of {value?.__typename}</button>
-
-
 										}
 									)
 							}

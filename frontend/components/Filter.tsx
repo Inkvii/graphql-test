@@ -1,18 +1,7 @@
-import {Fragment, useEffect, useMemo, useState} from "react"
+import {useEffect, useMemo, useState} from "react"
 import {UserCondition} from "graphql/types"
+import LabelInput, {FormDto} from "components/LabelInput"
 
-
-interface Validator {
-	regex: string,
-	textOnError: string
-}
-
-interface FormDto {
-	label: string,
-	value: string,
-	validators?: Validator[]
-	valid: boolean | null
-}
 
 interface UserFormDto {
 	fromId: FormDto,
@@ -80,7 +69,7 @@ export default function Filter(props: Props) {
 			const keyLiteral = key as unknown as keyof UserFormDto
 			const form = dto[keyLiteral]
 			console.log("Form " + keyLiteral + " is " + form.valid)
-			return !form.valid
+			return !(form.valid || form.valid === null)
 		})
 		console.log("Disable filter rememoied to " + result)
 		return result
@@ -88,7 +77,7 @@ export default function Filter(props: Props) {
 
 
 	const onFilter = () => {
-
+		// prepare graphql stuff for filtering
 		const condition: UserCondition = {
 			firstName: dto.firstName.value.length > 0 ? dto.firstName.value : undefined,
 			lastName: dto.lastName.value.length > 0 ? dto.lastName.value : undefined,
@@ -110,7 +99,7 @@ export default function Filter(props: Props) {
 		setDto(JSON.parse(JSON.stringify(initialState)))
 	}
 
-	const setValue = (property: keyof UserFormDto, value: string, valid: boolean) => {
+	const setValue = (property: keyof UserFormDto, value: string, valid: boolean | null) => {
 		const changedValue = dto[property]
 		changedValue.value = value
 		changedValue.valid = valid
@@ -133,12 +122,12 @@ export default function Filter(props: Props) {
 						return (
 							<LabelInput key={key}
 							            formDto={{
-								            label: dto[keyLiteral].label,
-								            value: dto[keyLiteral].value,
-								            validators: dto[keyLiteral].validators,
-								            valid: dto[keyLiteral].valid
+								            label: form.label,
+								            value: form.value,
+								            validators: form.validators,
+								            valid: form.valid
 							            }}
-							            onChange={(updatedValue: string, valid: boolean) => setValue(keyLiteral, updatedValue, valid)}/>
+							            onChange={(updatedValue, valid) => setValue(keyLiteral, updatedValue, valid)}/>
 						)
 					})}
 				</div>
@@ -154,50 +143,3 @@ export default function Filter(props: Props) {
 	)
 }
 
-const LabelInput = (props: { formDto: FormDto, onChange: Function }) => {
-	const [errorText, setErrorText] = useState<string>("")
-	const [className, setClassName] = useState<string>("")
-
-	const changeValue = (updatedValue: string) => {
-		let text = ""
-		let result = true
-
-		if (props.formDto.validators) {
-			for (let validator of props.formDto.validators) {
-				result = result && updatedValue.search(new RegExp(validator.regex)) >= 0
-				if (!result) {
-					text = validator.textOnError
-					break
-				}
-			}
-
-			setErrorText(text)
-		}
-
-		props.onChange(updatedValue, result)
-	}
-
-	useEffect(() => {
-		if (props.formDto.valid === true) {
-			const css = "border-green-700"
-			setClassName(css)
-		} else if (props.formDto.valid === false) {
-			const css = "border-red-700"
-			setClassName(css)
-		} else {
-			const css = "border-black"
-			setClassName(css)
-		}
-		console.log("Triggered use effect on valid to: " + props.formDto.valid)
-	}, [props.formDto.valid])
-
-	return (
-		<Fragment>
-			<label>{props.formDto.label}</label>
-			<input type={"text"} className={`p-1 my-1 border  outline-none ${className}`}
-			       value={props.formDto.value}
-			       onChange={e => changeValue(e.target.value)}/>
-			<label className={"text-center text-sm text-red-500"}>{props.formDto.valid !== null ? errorText : ""}</label>
-		</Fragment>
-	)
-}
