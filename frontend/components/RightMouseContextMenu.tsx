@@ -1,8 +1,33 @@
+interface Fish {
+	__type: "Fish"
+	speed: number
+	age: number
+}
+
+interface Cat {
+	__type: "Cat"
+	age: number
+	name: string
+}
+
+
 export default function RightMouseContextMenu(props: { positionX: number, positionY: number, onMouseLeave: Function }) {
+
+	const getInfo = (input: Cat | Fish) => {
+		console.log(JSON.stringify(input))
+		if (input.__type === "Fish") {
+			console.log("I am a fish with " + JSON.stringify(input as Fish))
+		} else if (input.__type === "Cat") {
+			console.log("I am a cat with " + JSON.stringify(input as Cat))
+		} else {
+			console.log("Unknown type")
+		}
+	}
+
 
 	return (
 		<div
-			className={"absolute w-56 opacity-0 bg-gray-200 rounded flex flex-col shadow shadow-md transition transition-opacity hover:opacity-100 duration-300 ease-in-out"}
+			className={"absolute w-56 opacity-0 bg-gray-200 rounded flex flex-col shadow-md transition-opacity hover:opacity-100 duration-300 ease-in-out"}
 			style={{left: props.positionX - 20, top: props.positionY - 20}}
 			onMouseLeave={() => props.onMouseLeave()}>
 			<div className={"px-4 pt-1 bg-gray-400 rounded-t"}>
@@ -10,8 +35,12 @@ export default function RightMouseContextMenu(props: { positionX: number, positi
 
 			</div>
 			<ul className={"text-md"}>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 1</li>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 23</li>
+				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
+				    onClick={() => getInfo({__type: "Fish", age: 10, speed: 50} as Fish)}>Fish
+				</li>
+				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
+				    onClick={() => getInfo({__type: "Cat", name: "asd", age: 30} as Cat)}>Cat
+				</li>
 				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 3</li>
 				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 5</li>
 
@@ -20,3 +49,4 @@ export default function RightMouseContextMenu(props: { positionX: number, positi
 		</div>
 	)
 }
+
