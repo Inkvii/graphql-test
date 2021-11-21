@@ -3,6 +3,8 @@ import ResultList from "components/ResultList"
 import {gql, useQuery} from "@apollo/client"
 import {Query} from "graphql/types"
 import Link from 'next/link'
+import {useState} from "react"
+import RightMouseContextMenu from "components/RightMouseContextMenu"
 
 
 export default function Home() {
@@ -29,9 +31,17 @@ export default function Home() {
 	`
 
 	const {loading, error, data, refetch} = useQuery<Query>(MY_QUERY)
+	const [showContextMenu, setShowContextMenu] = useState<boolean>(false)
+	const [position, setPosition] = useState<number[]>([0, 0])
 
 	return (
-		<div className={"flex justify-center bg-gray-200"}>
+		<div className={"flex justify-center bg-gray-200"} onContextMenu={(e) => {
+			e.preventDefault()
+			setShowContextMenu(!showContextMenu)
+			setPosition([e.clientX, e.clientY])
+		}}>
+			{showContextMenu &&
+			<RightMouseContextMenu positionX={position[0]} positionY={position[1]} onMouseLeave={() => setShowContextMenu(false)}/>}
 			<div className={"flex flex-col w-5/6 my-4 bg-gray-100 min-h-screen px-8 py-4"}>
 				<h1 className={"flex text-4xl justify-center pb-4"}>
 					GraphQL Api test
