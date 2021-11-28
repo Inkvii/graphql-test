@@ -1,3 +1,6 @@
+import {animated, useTransition} from "@react-spring/web"
+import {useState} from "react"
+
 interface Fish {
 	__type: "Fish"
 	speed: number
@@ -12,6 +15,20 @@ interface Cat {
 
 
 export default function RightMouseContextMenu(props: { positionX: number, positionY: number, onMouseLeave: Function }) {
+	const [active, setActive] = useState<boolean>(true)
+	const transitions = useTransition(active, {
+		from: {
+			opacity: active ? 0 : 1
+		},
+		enter: {
+			opacity: active ? 1 : 0
+		},
+		onRest: () => {
+			console.log("Transition on rest. Active: " + active)
+			if (!active) props.onMouseLeave()
+		},
+	})
+
 
 	const getInfo = (input: Cat | Fish) => {
 		console.log(JSON.stringify(input))
@@ -24,29 +41,39 @@ export default function RightMouseContextMenu(props: { positionX: number, positi
 		}
 	}
 
+	return transitions((style, item) => {
 
-	return (
-		<div
-			className={"absolute w-56 opacity-0 bg-gray-200 rounded flex flex-col shadow-md transition-opacity hover:opacity-100 duration-300 ease-in-out"}
-			style={{left: props.positionX - 20, top: props.positionY - 20}}
-			onMouseLeave={() => props.onMouseLeave()}>
-			<div className={"px-4 pt-1 bg-gray-400 rounded-t"}>
-				Context menu has appeared
+		return (
 
-			</div>
-			<ul className={"text-md"}>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
-				    onClick={() => getInfo({__type: "Fish", age: 10, speed: 50} as Fish)}>Fish
-				</li>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
-				    onClick={() => getInfo({__type: "Cat", name: "asd", age: 30} as Cat)}>Cat
-				</li>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 3</li>
-				<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 5</li>
+			<animated.div
+				className={"absolute w-56 bg-gray-200 rounded flex flex-col shadow-md"}
+				key={"divik"}
+				style={{
+					left: props.positionX - 20,
+					top: props.positionY - 20,
+					...style
+				}}
+				onMouseLeave={() => {
+					setActive(false)
+				}}>
+				<div className={"px-4 pt-1 bg-gray-400 rounded-t"}>
+					Context menu has appeared
 
-			</ul>
+				</div>
+				<ul className={"text-md"}>
+					<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
+					    onClick={() => getInfo({__type: "Fish", age: 10, speed: 50} as Fish)}>Fish
+					</li>
+					<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}
+					    onClick={() => getInfo({__type: "Cat", name: "asd", age: 30} as Cat)}>Cat
+					</li>
+					<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 3</li>
+					<li className={"py-1 hover:bg-gray-300 px-3 border-b border-gray-300"}>Something 5</li>
 
-		</div>
-	)
+				</ul>
+
+			</animated.div>
+		)
+	})
 }
 
